@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+<script>
+    var app = angular.module("myApp", []);
+    app.controller("myCtrl", function($scope) {
+        $scope.submit = function() {
+            if ($scope.myForm.$valid) {
+                alert("Form is valid!");
+            } else {
+                alert("Form is invalid!");
+            }
+        }
+    });
+    app.directive('username', function() {
+        return {
+            require: 'ngModel',
+            link: function(scope, elm, attrs, ctrl) {
+                ctrl.$validators.username = function(modelValue, viewValue) {
+                    if (viewValue.match(/^[a-zA-Z0-9]{5,18}$/)) {
+                        return true;
+                    }
+                    return false;
+                };
+            }
+        };
+    });
+</script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <h1>
+        Login Page
+    </h1>
+
+    <form novalidate name="myForm" ng-submit="submit()">
+        <table>
+            <tr>
+                <td>Username</td>
+                <td><input type="text" name="username" id="username" ng-model="username" ng-required="true" ng-minlength="5" ng-maxlength="18" username ></td>
+                <td>
+                    <span ng-show="myForm.username.$touched && myForm.username.$error.required">Username is required.</span>
+                    <span ng-show="myForm.username.$touched && myForm.username.$error.username">Username is invalid.</span>
+                    <span ng-show="myForm.username.$touched && myForm.username.$error.minlength">Username is too short.</span>
+                    <span ng-show="myForm.username.$touched && myForm.username.$error.maxlength">Username is too long.</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="password" name="pass" id="pass" ng-model="password" ng-pattern="/^[a-zA-Z0-9!@#$%^&*]{6,16}$/"></td>
+                <td>
+                    <span ng-show="myForm.pass.$touched && myForm.pass.$error.required">Password is required.</span>
+                    <span ng-show="myForm.pass.$touched && myForm.pass.$error.pattern">Password is invalid.</span>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Submit"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
