@@ -22,10 +22,6 @@ app.config(function ($routeProvider) {
             templateUrl: 'home/home.html',
             controller: 'HomeController'
         })
-        .when('/blog', {
-            templateUrl: 'aboutme/aboutme.html',
-            controller: 'AboutMeController'
-        })
         .when('/articles', {
             templateUrl: 'articles/articles.html',
             controller: 'ArticlesController'
@@ -33,6 +29,14 @@ app.config(function ($routeProvider) {
         .when('/article/:id', {
             templateUrl: 'articles/article.html',
             controller: 'ArticleController'
+        })
+        .when('/contact', {
+            templateUrl: 'contact/contact.html',
+            controller: 'ContactController'
+        })
+        .when('/about', {
+            templateUrl: 'aboutme/aboutme.html',
+            controller: 'AboutMeController'
         })
         .otherwise({ redirectTo: '/' });
 });
@@ -56,6 +60,9 @@ app.controller('HomeController', function($scope) {
     }
   });
   
+  app.controller('ContactController', function($scope) {
+    $scope.message = 'Hello from ContactController';
+  });
   app.controller('AboutController', function($scope) {
     $scope.message = 'Hello from AboutController';
   });
